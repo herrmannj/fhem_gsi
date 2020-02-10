@@ -643,3 +643,83 @@ sub parse {
 };
 
 1;
+
+=pod
+=item helper
+=item summary 		green power index (Energy and carbon consumption)
+=item summary_DE	Gruen Strom Index (Energie und Co2)
+=begin html
+
+<a name="GSI"></a>
+<h3>GSI</h3>
+<ul>
+	GSI shows the share of renewable energies in the power grid for any location 
+	in Germany at the current time and a forecast for the next 24 hours.
+	At the same time, Co2 emissions for generation are displayed. Co2 values 
+	for the regular electricity mix and Co2 values for tariffs with 100% renewable 
+	energy are available.
+	<br><br>
+	In addition, based on the prediction of the electricity composition, 
+	the energy consumption can be planned for periods with a high proportion 
+	of renewable energies and thus low Co2 emissions.
+	<br><br>
+	The energy forecasts are provided by 'corrently', in cooperation with 
+	the network operators, based on the network topology and weather 
+	forecasts. 
+	<br><br>
+
+	<a name="GSIdefine"></a>
+	<b>Define</b>
+	<ul>
+    	<code>define &lt;name&gt; GSI &lt;zip&gt;</code>
+    	<br><br>
+    	defines the device for the given (german only) zip code.
+	</ul>
+	<br>
+
+	<a name="GSIset"></a>
+	<b>Set</b>
+	<ul>
+		N/A
+	</ul>
+	<br>
+
+	<a name="GSIget"></a>
+	<b>Get</b>
+	<ul>
+		N/A
+	</ul>
+	<br>
+
+	<a name="GSIattr"></a>
+	<b>Attributes</b>
+	<ul>
+    	<a name="cmdStateIcon"></a>
+    	<li>cmdStateIcon<br>
+    		preset to the function
+    		<ul><li><code>{GSI::devStateIcon($name)}</code></li></ul>
+    		and can be advanced to 
+    		<ul><li><code>{GSI::devStateIcon($name,'other_valid_svg_icon_name')}</code></li></ul>
+    		The icon will be colored based on share of renewable energy (GSI) available:
+    		<ul>
+    			<li>0..39: black</li>
+    			<li>40..59: orange</li>
+    			<li>60..100: green</li>
+			</ul><br>
+		</li>
+	</ul>
+
+	<a name="GSIschedule"></a>
+	<b>Consumption schedule</b>
+	<ul>
+		<a name="Predictive switching"></a>
+		The prediction (forecast) can be used to automatically control electrical consumers 
+		based in the amount of renewable energy expected:<br>
+		<ul><li><code>define name at {GSI::greenPower('name_of_gsi_device',2,18)} set consumer on-for-timer 720</code></li></ul><br>
+		This example requests the 2 consecutive hours with the highest share of renewable energy within the next 18 hours. 
+		This is used for the definition of an 'at' which switches on a consumer for 2 hours (720 seconds) at the best possible time.
+	</ul>
+</ul>
+=end html
+
+=cut

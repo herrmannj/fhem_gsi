@@ -1,0 +1,32 @@
+GSI (FHEM)
+
+GSI shows the share of renewable energies in the power grid for any location in Germany at the current time and a forecast for the next 24 hours. At the same time, Co2 emissions for generation are displayed. Co2 values for the regular electricity mix and Co2 values for tariffs with 100% renewable energy are available.
+
+In addition, based on the prediction of the electricity composition, the energy consumption can be planned for periods with a high proportion of renewable energies and thus low Co2 emissions.
+
+The energy forecasts are provided by 'corrently', in cooperation with the network operators, based on the network topology and weather forecasts.
+
+    Define
+        define <name> GSI <zip>
+
+        defines the device for the given (german only) zip code. 
+    Set
+        N/A 
+    Get
+        N/A 
+    Attributes
+        cmdStateIcon
+        preset to the function
+            {GSI::devStateIcon($name)}
+        and can be advanced to
+            {GSI::devStateIcon($name,'other_valid_svg_icon_name')}
+        The icon will be colored based on share of renewable energy (GSI) available:
+            0..39: black
+            40..59: orange
+            60..100: green
+
+    Consumption schedule
+        The prediction (forecast) can be used to automatically control electrical consumers based in the amount of renewable energy expected:
+            define name at {GSI::greenPower('name_of_gsi_device',2,18)} set consumer on-for-timer 720
+
+        This example requests the 2 consecutive hours with the highest share of renewable energy within the next 18 hours. This is used for the definition of an 'at'   which switches on a consumer for 2 hours (720 seconds) at the best possible time. 
